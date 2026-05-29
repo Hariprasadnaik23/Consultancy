@@ -60,6 +60,9 @@ nav.navbar{position:fixed;top:0;left:0;width:100%;height:76px;z-index:100;displa
 nav.navbar.scrolled{background:rgba(3,3,8,0.90);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
 .nav-brand{display:flex;align-items:center;gap:14px;}
 .rc-badge{width:38px;height:38px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display';font-weight:900;color:#fff;font-size:16px;box-shadow:0 8px 24px rgba(200,16,46,0.35);}
+.logo-img{height:64px;width:auto;object-fit:contain;display:block;}
+.nav-brand .logo-img{height:64px;}
+.footer-col-brand .logo-img{height:72px;margin-bottom:12px;}
 .nav-brand-name{font-family:'DM Sans';font-weight:500;font-size:15px;color:#fff;letter-spacing:.01em;}
 .nav-links{display:flex;gap:34px;align-items:center;}
 .nav-link{position:relative;font-family:'DM Sans';font-weight:400;font-size:14px;color:var(--white-70);letter-spacing:.01em;padding:8px 0;transition:color .3s;}
@@ -524,7 +527,7 @@ footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);t
 <!-- NAV -->
 <nav class="navbar">
   <a href="#hero" class="nav-brand">
-    <div class="rc-badge">RC</div>
+    <img src="logo.png" alt="Reading Culture Limited" class="logo-img">
     <div class="nav-brand-name">Reading Culture Limited</div>
   </a>
   <div class="nav-links">
@@ -904,7 +907,7 @@ footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);t
   <div class="wm">READING CULTURE</div>
   <div class="footer-grid">
     <div class="footer-col-brand">
-      <a href="#hero" class="nav-brand"><div class="rc-badge">RC</div><div class="nav-brand-name">Reading Culture Limited</div></a>
+      <a href="#hero" class="nav-brand"><img src="logo.png" alt="Reading Culture Limited" class="logo-img"></a>
       <p>For all your academic and career development needs. Building a global future, one student at a time.</p>
       <div class="socials"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="Twitter">tw</a></div>
     </div>
