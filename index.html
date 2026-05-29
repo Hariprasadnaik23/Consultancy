@@ -1,0 +1,1351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Reading Culture Limited — Building a Global Future</title>
+<meta name="description" content="Nigeria's premier international education & academic consultancy. Study in USA, UK, Canada. Scholarship support, visa guidance, language tutoring." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,800;0,900;1,800;1,900&family=DM+Sans:wght@200;300;400;500;600;700&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --red:#C8102E;
+  --red-bright:#FF1F40;
+  --red-soft:#FF6B6B;
+  --black:#030308;
+  --black-2:#0D0D14;
+  --black-card:#0A0A12;
+  --cream:#F8F6F1;
+  --white-90:rgba(255,255,255,0.90);
+  --white-70:rgba(255,255,255,0.70);
+  --white-55:rgba(255,255,255,0.55);
+  --white-45:rgba(255,255,255,0.45);
+  --white-35:rgba(255,255,255,0.35);
+  --white-25:rgba(255,255,255,0.25);
+  --white-10:rgba(255,255,255,0.10);
+  --white-06:rgba(255,255,255,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box;cursor:none;}
+html,body{background:var(--black);color:#fff;font-family:'DM Sans',sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;border:none;background:none;color:inherit;}
+img{max-width:100%;display:block;}
+
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:#030308;}
+::-webkit-scrollbar-thumb{background:var(--red);border-radius:2px;}
+::-webkit-scrollbar-thumb:hover{background:var(--red-bright);}
+
+/* ============ CURSOR ============ */
+#cursor-dot{width:8px;height:8px;background:var(--red);border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s;top:0;left:0;}
+#cursor-ring{width:40px;height:40px;border:1.5px solid rgba(200,16,46,0.8);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s,background .3s;top:0;left:0;}
+.cursor-hover #cursor-dot{width:3px;height:3px;}
+.cursor-hover #cursor-ring{width:88px;height:88px;background:rgba(200,16,46,0.15);}
+.cursor-down #cursor-dot,.cursor-down #cursor-ring{transform:translate(-50%,-50%) scale(0.8);transition:transform .1s;}
+@media (pointer:coarse){#cursor-dot,#cursor-ring{display:none;} *{cursor:auto;}}
+
+/* ============ PRELOADER ============ */
+#preloader{position:fixed;inset:0;background:#030308;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;}
+#preloader-line{width:80px;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left center;margin-bottom:24px;}
+#preloader-rc{font-family:'Playfair Display';font-weight:900;font-size:88px;color:#fff;letter-spacing:-4px;opacity:0;transform:translateY(30px);line-height:1;}
+#preloader-name{font-family:'DM Sans';font-weight:200;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0;opacity:0;margin-top:18px;text-transform:uppercase;}
+#preloader-bar{position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left center;}
+
+/* ============ THREE CANVAS ============ */
+#three-canvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none;}
+
+/* ============ NAV ============ */
+nav.navbar{position:fixed;top:0;left:0;width:100%;height:76px;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 6%;transition:background .4s,backdrop-filter .4s,border .4s;}
+nav.navbar.scrolled{background:rgba(3,3,8,0.90);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-bottom:1px solid rgba(255,255,255,0.06);}
+.nav-brand{display:flex;align-items:center;gap:14px;}
+.rc-badge{width:38px;height:38px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;font-family:'Playfair Display';font-weight:900;color:#fff;font-size:16px;box-shadow:0 8px 24px rgba(200,16,46,0.35);}
+.nav-brand-name{font-family:'DM Sans';font-weight:500;font-size:15px;color:#fff;letter-spacing:.01em;}
+.nav-links{display:flex;gap:34px;align-items:center;}
+.nav-link{position:relative;font-family:'DM Sans';font-weight:400;font-size:14px;color:var(--white-70);letter-spacing:.01em;padding:8px 0;transition:color .3s;}
+.nav-link::after{content:'';position:absolute;left:0;bottom:0;width:0;height:1px;background:var(--red);transition:width .3s;}
+.nav-link:hover{color:#fff;}
+.nav-link:hover::after,.nav-link.active::after{width:100%;}
+.nav-link.active{color:#fff;}
+.nav-cta{background:var(--red);color:#fff;font-family:'DM Sans';font-weight:600;font-size:14px;border-radius:100px;padding:11px 24px;transition:transform .3s,box-shadow .3s,background .3s;}
+.nav-cta:hover{transform:translateY(-2px);background:var(--red-bright);box-shadow:0 0 10px rgba(200,16,46,.5),0 0 30px rgba(200,16,46,.3),0 0 60px rgba(200,16,46,.15);}
+.hamburger{display:none;width:30px;height:22px;position:relative;flex-direction:column;justify-content:space-between;}
+.hamburger span{display:block;width:100%;height:2px;background:#fff;transition:transform .4s,opacity .3s;transform-origin:center;}
+.hamburger.open span:nth-child(1){transform:translateY(10px) rotate(45deg);}
+.hamburger.open span:nth-child(2){opacity:0;}
+.hamburger.open span:nth-child(3){transform:translateY(-10px) rotate(-45deg);}
+@media(max-width:900px){.nav-links,.nav-cta{display:none;} .hamburger{display:flex;}}
+
+#mobile-menu{position:fixed;inset:0;background:rgba(3,3,8,0.97);backdrop-filter:blur(30px);z-index:99;display:none;flex-direction:column;align-items:center;justify-content:center;gap:24px;}
+#mobile-menu.open{display:flex;}
+#mobile-menu a{font-family:'Playfair Display';font-weight:700;font-size:36px;color:#fff;}
+#mobile-menu .contact-mini{margin-top:40px;font-family:'DM Sans';font-size:14px;color:var(--white-55);text-align:center;line-height:2;}
+
+/* ============ HERO ============ */
+.hero{min-height:100vh;position:relative;display:grid;grid-template-columns:55% 45%;align-items:center;padding:120px 6% 80px;overflow:hidden;background:
+  radial-gradient(ellipse 80% 60% at 85% 50%,rgba(200,16,46,0.20) 0%,transparent 65%),
+  radial-gradient(ellipse 50% 80% at 15% 30%,rgba(200,16,46,0.10) 0%,transparent 60%),
+  radial-gradient(ellipse 60% 40% at 50% 90%,rgba(30,0,80,0.30) 0%,transparent 70%),
+  #030308;
+  background-size:400% 400%;animation:mesh-drift 15s ease infinite;}
+@keyframes mesh-drift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+.noise::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.4;}
+
+.blob{position:absolute;border-radius:30% 70% 70% 30%/30% 30% 70% 70%;filter:blur(60px);pointer-events:none;z-index:1;}
+.blob-1{width:700px;height:700px;background:radial-gradient(circle,rgba(200,16,46,0.15),transparent 70%);top:-200px;left:-200px;animation:blob-morph 12s ease-in-out infinite;}
+.blob-2{width:500px;height:500px;background:radial-gradient(circle,rgba(200,16,46,0.10),transparent 70%);bottom:-150px;right:-100px;animation:blob-morph 14s ease-in-out infinite;animation-delay:-4s;}
+.blob-3{width:600px;height:600px;background:radial-gradient(circle,rgba(120,40,200,0.10),transparent 70%);top:30%;left:40%;animation:blob-morph 16s ease-in-out infinite;animation-delay:-8s;}
+@keyframes blob-morph{
+  0%,100%{border-radius:30% 70% 70% 30%/30% 30% 70% 70%}
+  25%{border-radius:58% 42% 75% 25%/76% 46% 54% 24%}
+  50%{border-radius:50% 50% 33% 67%/55% 27% 73% 45%}
+  75%{border-radius:33% 67% 58% 42%/63% 68% 32% 37%}
+}
+
+.hero-content{position:relative;z-index:10;}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 16px;border-radius:100px;border:1px solid rgba(200,16,46,0.4);background:rgba(200,16,46,0.10);color:#FF8096;font-family:'DM Sans';font-weight:600;font-size:11px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:28px;}
+.hero-content h1{font-family:'Playfair Display';font-weight:800;font-size:clamp(40px,5.2vw,68px);line-height:1.05;letter-spacing:-.03em;color:#fff;margin-bottom:8px;}
+.hero-content h1 .global{display:block;font-style:italic;font-weight:900;font-size:clamp(46px,6vw,78px);background:linear-gradient(135deg,#C8102E 0%,#FF6B6B 30%,#C8102E 60%,#8B0A1E 100%);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradient-shift 4s linear infinite;}
+@keyframes gradient-shift{0%{background-position:0% center}100%{background-position:300% center}}
+.hero-word{display:inline-block;}
+.hero-sub{font-family:'DM Sans';font-weight:300;font-size:18px;color:var(--white-70);line-height:1.80;max-width:480px;margin:28px 0 38px;position:relative;}
+.hero-sub::after{content:'|';color:var(--red);margin-left:4px;animation:blink 1s step-end infinite;}
+@keyframes blink{50%{opacity:0}}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:54px;}
+.btn-primary{position:relative;overflow:hidden;background:var(--red);color:#fff;font-family:'DM Sans';font-weight:700;font-size:16px;padding:17px 38px;border-radius:100px;transition:transform .3s,box-shadow .3s;}
+.btn-primary::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:right center;transition:transform .5s cubic-bezier(.7,0,.2,1);z-index:0;}
+.btn-primary span{position:relative;z-index:1;transition:color .4s;}
+.btn-primary:hover{transform:translateY(-3px);box-shadow:0 0 10px rgba(200,16,46,.5),0 0 30px rgba(200,16,46,.3),0 0 60px rgba(200,16,46,.15);}
+.btn-primary:hover::before{transform:scaleX(1);transform-origin:left center;}
+.btn-primary:hover span{color:var(--red);}
+.btn-ghost{border:1px solid rgba(255,255,255,0.20);color:var(--white-70);font-family:'DM Sans';font-weight:500;font-size:16px;padding:17px 38px;border-radius:100px;transition:all .3s;}
+.btn-ghost:hover{border-color:#fff;background:rgba(255,255,255,0.06);color:#fff;}
+
+.hero-stats{display:flex;gap:32px;align-items:center;}
+.hero-stat{position:relative;padding-right:32px;}
+.hero-stat:not(:last-child)::after{content:'';position:absolute;right:0;top:10%;height:80%;width:1px;background:rgba(255,255,255,0.10);}
+.hero-stat .num{font-family:'Playfair Display';font-weight:900;font-size:34px;color:#fff;line-height:1;}
+.hero-stat .num .suf{color:var(--red);}
+.hero-stat .lbl{font-family:'DM Sans';font-weight:300;font-size:11px;color:var(--white-45);text-transform:uppercase;letter-spacing:.12em;margin-top:6px;}
+
+.hero-right{position:relative;z-index:10;height:560px;}
+.dest-float{position:absolute;width:280px;padding:28px;border-radius:20px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);box-shadow:0 0 0 1px rgba(255,255,255,0.04),0 24px 64px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06);}
+.dest-float .flag-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.dest-float .flag{font-size:40px;}
+.dest-float .dot{width:10px;height:10px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(200,16,46,.7);animation:pulse-dot 2s infinite;}
+@keyframes pulse-dot{0%{box-shadow:0 0 0 0 rgba(200,16,46,.7)}70%{box-shadow:0 0 0 12px rgba(200,16,46,0)}100%{box-shadow:0 0 0 0 rgba(200,16,46,0)}}
+.dest-float h3{font-family:'Playfair Display';font-weight:700;font-size:24px;color:#fff;margin-bottom:6px;}
+.dest-float .tag{font-family:'DM Sans';font-weight:300;font-size:13px;color:var(--white-55);margin-bottom:14px;}
+.dest-float .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px;}
+.dest-float .pills span{font-family:'DM Sans';font-size:11px;padding:4px 10px;border-radius:100px;background:rgba(255,255,255,0.08);color:var(--white-70);}
+.dest-float .micro{font-family:'DM Sans';font-weight:600;font-size:13px;color:var(--red);}
+.dest-1{top:0;right:0;animation:floaty 6s ease-in-out infinite;}
+.dest-2{top:170px;left:-20px;animation:floaty 7s ease-in-out -2.5s infinite;}
+.dest-3{bottom:0;right:30px;animation:floaty 5.5s ease-in-out -4s infinite;}
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+
+.scroll-indicator{position:absolute;bottom:36px;left:6%;display:flex;flex-direction:column;align-items:center;gap:12px;z-index:10;}
+.scroll-indicator .line{width:1px;height:40px;background:rgba(255,255,255,0.20);}
+.scroll-indicator span{font-family:'DM Sans';font-weight:300;font-size:10px;color:var(--white-35);text-transform:uppercase;letter-spacing:.3em;}
+.scroll-indicator .arrow{color:var(--white-35);animation:bounce 1.5s infinite;}
+@keyframes bounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+
+@media(max-width:900px){.hero{grid-template-columns:1fr;padding-top:140px;} .hero-right{display:none;} .hero-stats{flex-wrap:wrap;gap:20px}}
+
+/* ============ MARQUEE ============ */
+.marquee{height:52px;background:var(--red);overflow:hidden;position:relative;z-index:5;border-top:1px solid rgba(255,255,255,.1);border-bottom:1px solid rgba(0,0,0,.2);}
+.marquee-row{display:flex;height:26px;align-items:center;white-space:nowrap;}
+.marquee-row span{font-family:'Playfair Display';font-style:italic;font-weight:700;font-size:16px;color:#fff;padding:0 24px;display:inline-flex;align-items:center;gap:24px;}
+.marquee-row span::after{content:'✦';font-style:normal;color:rgba(255,255,255,0.5);}
+.mq-1{animation:mq-left 30s linear infinite;}
+.mq-2{animation:mq-right 24s linear infinite;color:rgba(255,255,255,0.7);}
+.mq-2 span{color:rgba(255,255,255,0.7);}
+@keyframes mq-left{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes mq-right{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+/* ============ SECTION COMMON ============ */
+section{position:relative;}
+.section-tag{display:inline-block;font-family:'DM Sans';font-weight:600;font-size:11px;color:var(--red);text-transform:uppercase;letter-spacing:.25em;margin-bottom:18px;}
+.section-h2{font-family:'Playfair Display';font-weight:900;font-size:clamp(36px,4.5vw,60px);line-height:1.05;letter-spacing:-.02em;color:#fff;}
+.section-h2 .accent{font-style:italic;background:linear-gradient(135deg,#C8102E 0%,#FF6B6B 30%,#C8102E 60%,#8B0A1E 100%);background-size:300% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradient-shift 4s linear infinite;}
+.section-h2.dark{color:#0A0A0A;}
+.section-sub{font-family:'DM Sans';font-weight:300;font-size:17px;color:var(--white-55);line-height:1.8;max-width:600px;margin-top:24px;}
+.line-wrap{overflow:hidden;display:block;}
+
+/* ============ DESTINATIONS ============ */
+.destinations{background:#030308;padding:130px 6%;}
+.destinations .head{margin-bottom:64px;}
+.dest-grid{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:6px;height:680px;}
+.dest-card{position:relative;overflow:hidden;border-radius:18px;border:1px solid rgba(255,255,255,0.06);cursor:none;transition:box-shadow .4s;transform-style:preserve-3d;perspective:1200px;}
+.dest-card.usa{grid-row:span 2;background:linear-gradient(135deg,#1a0510,#0a0a14);}
+.dest-card.uk{background:linear-gradient(135deg,#0a0a20,#0a0a14);}
+.dest-card.ca{background:linear-gradient(135deg,#1a0a08,#0a0a14);}
+.dest-card::before{content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,#030308 95%);z-index:1;}
+.dest-card .inner{position:absolute;inset:0;padding:32px;display:flex;flex-direction:column;justify-content:flex-end;z-index:2;transform-style:preserve-3d;}
+.dest-card .bg-icon{position:absolute;top:30px;right:30px;font-size:80px;opacity:.07;z-index:0;}
+.dest-card .flag{font-size:44px;margin-bottom:14px;transform:translateZ(40px);}
+.dest-card h3{font-family:'Playfair Display';font-weight:900;color:#fff;transform:translateZ(20px);margin-bottom:8px;line-height:1;}
+.dest-card.usa h3{font-size:52px;}
+.dest-card.uk h3,.dest-card.ca h3{font-size:36px;}
+.dest-card .tag{font-family:'DM Sans';font-weight:300;font-size:14px;color:var(--white-55);transform:translateZ(10px);margin-bottom:14px;}
+.dest-card .pills{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:16px;transform:translateZ(10px);}
+.dest-card .pills span{font-family:'DM Sans';font-size:11px;padding:5px 11px;border-radius:100px;background:rgba(255,255,255,0.08);color:#fff;}
+.dest-card .cta{font-family:'DM Sans';font-weight:600;font-size:14px;color:var(--red);transform:translateZ(20px);}
+.dest-card:hover{box-shadow:0 0 0 1px var(--red),0 0 30px rgba(200,16,46,.3),0 0 60px rgba(200,16,46,.15);}
+.dest-card:hover h3{text-shadow:0 0 30px rgba(200,16,46,.6);}
+@media(max-width:900px){.dest-grid{grid-template-columns:1fr;grid-template-rows:repeat(3,1fr);height:auto;} .dest-card.usa{grid-row:span 1;} .dest-card{min-height:280px;}}
+
+/* ============ SERVICES ============ */
+.services{background:var(--cream);padding:130px 6%;color:#0A0A0A;}
+.services .head{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;margin-bottom:70px;}
+.services .head .right{text-align:right;}
+.services .head .right p{font-family:'DM Sans';font-weight:300;font-size:16px;color:#555;line-height:1.8;max-width:380px;margin-left:auto;margin-bottom:18px;}
+.view-all{font-family:'DM Sans';font-weight:600;font-size:14px;color:var(--red);}
+.svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;}
+.card-container{perspective:1000px;height:240px;}
+.card-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .7s cubic-bezier(.16,1,.3,1);}
+.card-container:hover .card-inner{transform:rotateY(180deg);}
+.card-front,.card-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;-webkit-backface-visibility:hidden;border-radius:16px;overflow:hidden;}
+.card-front{background:#fff;border:1px solid rgba(0,0,0,0.06);padding:28px 24px;display:flex;flex-direction:column;}
+.card-front .icon-circle{width:52px;height:52px;border-radius:50%;background:rgba(200,16,46,0.08);display:flex;align-items:center;justify-content:center;font-size:24px;transition:background .3s,color .3s,transform .3s;}
+.card-front .num{position:absolute;top:24px;right:24px;font-family:'Playfair Display';font-weight:900;font-size:14px;color:rgba(0,0,0,0.15);}
+.card-front h4{font-family:'Playfair Display';font-weight:700;font-size:18px;color:#0A0A0A;margin-top:18px;}
+.card-front p{font-family:'DM Sans';font-weight:300;font-size:13px;color:#666;margin-top:6px;line-height:1.6;}
+.card-front::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(200,16,46,0.06) 50%,transparent 60%);background-size:200% auto;animation:shimmer 3s linear infinite;pointer-events:none;}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+.card-back{transform:rotateY(180deg);background:linear-gradient(135deg,var(--red),#8B0A1E);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;gap:10px;}
+.card-back .ico{font-size:46px;}
+.card-back h4{font-family:'Playfair Display';font-weight:700;font-size:18px;color:#fff;}
+.card-back p{font-family:'DM Sans';font-weight:300;font-size:13px;color:rgba(255,255,255,0.85);max-width:200px;line-height:1.5;}
+.card-back a{margin-top:6px;background:#fff;color:var(--red);font-family:'DM Sans';font-weight:700;font-size:12px;padding:7px 16px;border-radius:100px;}
+@media(max-width:1100px){.svc-grid{grid-template-columns:repeat(2,1fr);}}
+@media(max-width:600px){.svc-grid{grid-template-columns:1fr;} .services .head{grid-template-columns:1fr;} .services .head .right{text-align:left;} .services .head .right p{margin-left:0;}}
+
+/* ============ LANGUAGES (horizontal scroll) ============ */
+.languages-section{background:#030308;padding:130px 0;overflow:hidden;position:relative;}
+.languages-section .head{padding:0 6%;margin-bottom:60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;}
+.lang-wrapper{height:380px;position:relative;}
+.lang-track{display:flex;gap:20px;padding:0 6%;height:100%;align-items:center;}
+.lang-card{flex:0 0 260px;height:300px;background:var(--black-card);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:36px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:transform .4s,background .4s,box-shadow .4s;}
+.lang-card .flag{font-size:48px;transition:transform .4s;}
+.lang-card h4{font-family:'Playfair Display';font-weight:700;font-size:22px;color:#fff;}
+.lang-card .mode{font-family:'DM Sans';font-size:11px;padding:5px 12px;border-radius:100px;background:rgba(255,255,255,0.06);color:var(--white-55);}
+.lang-card:hover{background:var(--red);transform:translateY(-6px);box-shadow:0 0 10px rgba(200,16,46,.5),0 0 30px rgba(200,16,46,.3),0 0 60px rgba(200,16,46,.15);}
+.lang-card:hover .flag{transform:scale(1.35);}
+.lang-card:hover .mode{background:rgba(255,255,255,0.2);color:#fff;}
+@media(max-width:900px){.languages-section .head{grid-template-columns:1fr;}}
+
+/* ============ PROCESS ============ */
+.process-section{background:var(--black-2);padding:130px 6%;}
+.process-section .head{text-align:center;margin-bottom:80px;}
+.process-section .section-sub{margin-left:auto;margin-right:auto;}
+.process-wrap{position:relative;padding-top:40px;}
+.process-line{position:absolute;top:40px;left:5%;right:5%;height:2px;background:rgba(255,255,255,0.06);}
+.process-line-fill{position:absolute;inset:0;background:var(--red);transform:scaleX(0);transform-origin:left center;box-shadow:0 0 14px rgba(200,16,46,.6);}
+.process-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:30px;position:relative;}
+.process-step{position:relative;padding-top:60px;text-align:center;}
+.process-step .node{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:30px;height:30px;border-radius:50%;background:var(--black-2);border:2px solid rgba(255,255,255,0.15);transition:background .3s,border .3s,box-shadow .3s;}
+.process-step.active .node{background:var(--red);border-color:var(--red);box-shadow:0 0 0 6px rgba(200,16,46,.18);}
+.process-step .step-num{font-family:'Playfair Display';font-weight:900;font-size:72px;color:var(--red);opacity:.7;line-height:1;}
+.process-step h4{font-family:'DM Sans';font-weight:700;font-size:18px;color:#fff;margin-top:14px;}
+.process-step p{font-family:'DM Sans';font-weight:300;font-size:14px;color:var(--white-45);line-height:1.7;max-width:180px;margin:10px auto 0;}
+@media(max-width:900px){.process-grid{grid-template-columns:1fr 1fr;} .process-line{display:none;}}
+@media(max-width:600px){.process-grid{grid-template-columns:1fr;}}
+
+/* ============ EXAMS ============ */
+.exams{background:#030308;padding:130px 6%;}
+.exams .head{text-align:center;margin-bottom:70px;}
+.exam-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+.exam-card{position:relative;overflow:hidden;background:var(--black-card);border:1px solid rgba(255,255,255,0.07);border-radius:16px;padding:32px;min-height:200px;transition:transform .4s,box-shadow .4s;}
+.exam-card .watermark{position:absolute;right:-10px;bottom:-30px;font-family:'Playfair Display';font-weight:900;font-size:110px;color:rgba(255,255,255,0.02);line-height:1;pointer-events:none;}
+.exam-card::after{content:'';position:absolute;inset:0;background:linear-gradient(105deg,transparent 40%,rgba(255,255,255,0.04) 50%,transparent 60%);background-size:200% auto;animation:shimmer 3s linear infinite;pointer-events:none;}
+.exam-card .badge{display:inline-block;font-family:'Playfair Display';font-weight:900;font-size:22px;padding:8px 16px;border-radius:6px;}
+.exam-card.w .badge{background:#fff;color:#0A0A0A;}
+.exam-card.r .badge{background:var(--red);color:#fff;}
+.exam-card h4{font-family:'DM Sans';font-weight:700;font-size:16px;color:#fff;margin-top:18px;position:relative;z-index:2;}
+.exam-card p{font-family:'DM Sans';font-weight:300;font-size:13px;color:var(--white-45);line-height:1.65;margin-top:8px;position:relative;z-index:2;}
+.exam-card .arrow{position:absolute;top:24px;right:24px;width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,0.07);display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;transition:transform .4s,background .4s;}
+.exam-card:hover{transform:translateY(-6px);box-shadow:0 0 0 1px var(--red),0 0 30px rgba(200,16,46,.25);}
+.exam-card:hover .arrow{transform:rotate(45deg);background:var(--red);}
+@media(max-width:900px){.exam-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:600px){.exam-grid{grid-template-columns:1fr;}}
+
+/* ============ WHY ============ */
+.why{background:var(--black-2);padding:130px 6%;}
+.why .row{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;}
+.why-list{margin-top:40px;}
+.why-item{display:grid;grid-template-columns:48px 1fr;gap:20px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,0.06);align-items:start;}
+.why-item .check{width:32px;height:32px;border-radius:50%;background:var(--red);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;box-shadow:0 0 0 4px rgba(200,16,46,.15);}
+.why-item h5{font-family:'DM Sans';font-weight:700;font-size:15px;color:#fff;}
+.why-item p{font-family:'DM Sans';font-weight:300;font-size:13px;color:var(--white-45);line-height:1.7;margin-top:4px;}
+.metric-panel{position:relative;overflow:hidden;background:var(--black-card);border:1px solid rgba(255,255,255,0.07);border-radius:24px;padding:52px 48px;}
+.metric-panel::before{content:'';position:absolute;left:50%;bottom:-150px;width:600px;height:300px;background:radial-gradient(ellipse,rgba(200,16,46,0.18),transparent 60%);transform:translateX(-50%);pointer-events:none;}
+.metric-row{padding:22px 0;border-bottom:1px solid rgba(255,255,255,0.06);position:relative;}
+.metric-row:last-child{border-bottom:none;}
+.metric-row .num{font-family:'Playfair Display';font-weight:900;font-size:60px;color:#fff;line-height:1;}
+.metric-row .num .suf{color:var(--red);}
+.metric-row .lbl{font-family:'DM Sans';font-weight:300;font-size:14px;color:var(--white-45);margin-top:6px;}
+.metric-row .underline{display:block;width:60px;height:2px;background:var(--red);margin-top:14px;transform:scaleX(0);transform-origin:left;transition:transform .8s .3s ease;}
+.metric-row.shown .underline{transform:scaleX(1);}
+@media(max-width:900px){.why .row{grid-template-columns:1fr;}}
+
+/* ============ TESTIMONIALS ============ */
+.testimonials{background:var(--cream);padding:130px 6%;color:#0A0A0A;overflow:hidden;}
+.testimonials .head{text-align:center;margin-bottom:60px;}
+.carousel{position:relative;}
+.carousel-window{overflow:hidden;}
+.carousel-track{display:flex;gap:24px;will-change:transform;}
+.t-card{flex:0 0 calc((100% - 48px) / 3);background:#fff;border:1px solid rgba(0,0,0,0.06);border-radius:20px;padding:36px 32px;transition:transform .4s,opacity .4s;}
+.t-card .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;}
+.t-card .stars{color:var(--red);font-size:15px;letter-spacing:1px;}
+.t-card .flag-pill{display:inline-flex;align-items:center;gap:6px;background:#0A0A0A;color:#fff;font-family:'DM Sans';font-size:11px;padding:4px 10px;border-radius:100px;}
+.t-card .qm{font-family:'Playfair Display';font-weight:900;font-size:80px;color:var(--red);line-height:0;display:block;margin:30px 0 -10px;}
+.t-card .quote{font-family:'DM Serif Display';font-style:italic;font-size:17px;color:#333;line-height:1.75;margin-bottom:28px;}
+.t-card .who{display:flex;align-items:center;gap:14px;border-top:1px solid rgba(0,0,0,0.06);padding-top:18px;}
+.t-card .avatar{width:44px;height:44px;border-radius:50%;background:var(--red);color:#fff;font-family:'DM Sans';font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;}
+.t-card .who h6{font-family:'DM Sans';font-weight:700;font-size:15px;color:#0A0A0A;}
+.t-card .who span{font-family:'DM Sans';font-weight:300;font-size:13px;color:#777;}
+.carousel-nav{display:flex;gap:12px;justify-content:center;margin-top:40px;align-items:center;}
+.carousel-nav button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(0,0,0,0.15);color:#0A0A0A;font-size:18px;transition:all .3s;display:flex;align-items:center;justify-content:center;}
+.carousel-nav button:hover{background:var(--red);color:#fff;border-color:var(--red);}
+.carousel-dots{display:flex;gap:8px;margin:0 16px;}
+.carousel-dots .dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,0.2);transition:all .3s;}
+.carousel-dots .dot.active{background:var(--red);width:24px;border-radius:4px;}
+@media(max-width:900px){.t-card{flex:0 0 calc((100% - 24px) / 2);}}
+@media(max-width:600px){.t-card{flex:0 0 100%;}}
+
+/* ============ CTA BANNER ============ */
+.cta-banner{background:var(--red);padding:100px 6%;position:relative;overflow:hidden;display:grid;grid-template-columns:55% 45%;gap:60px;align-items:center;}
+.cta-banner .blob-w{position:absolute;border-radius:50%;background:rgba(255,255,255,0.04);filter:blur(60px);pointer-events:none;}
+.cta-banner .blob-w.b1{width:500px;height:500px;top:-200px;left:-100px;animation:blob-morph 13s infinite;}
+.cta-banner .blob-w.b2{width:400px;height:400px;bottom:-150px;right:-100px;animation:blob-morph 15s -3s infinite;}
+.cta-banner .overline{font-family:'DM Sans';font-weight:500;font-size:11px;color:rgba(255,255,255,0.65);text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px;}
+.cta-banner h2{font-family:'Playfair Display';font-weight:900;font-size:clamp(34px,4.5vw,56px);color:#fff;line-height:1.05;letter-spacing:-.02em;}
+.cta-banner h2 .it{font-style:italic;text-decoration:underline;text-decoration-thickness:3px;text-underline-offset:8px;}
+.cta-banner .sub{font-family:'DM Sans';font-weight:300;font-size:17px;color:rgba(255,255,255,0.8);margin-top:18px;line-height:1.7;max-width:500px;}
+.cta-banner .right{display:flex;flex-direction:column;align-items:flex-end;gap:14px;position:relative;z-index:2;}
+.cta-banner .right .btn-w{position:relative;overflow:hidden;background:#fff;color:var(--red);font-family:'DM Sans';font-weight:700;font-size:16px;padding:17px 40px;border-radius:100px;min-width:280px;text-align:center;transition:transform .3s,box-shadow .3s;}
+.cta-banner .right .btn-w:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 20px 50px rgba(0,0,0,.25);}
+.cta-banner .right .btn-o{background:transparent;border:2px solid rgba(255,255,255,0.5);color:#fff;font-family:'DM Sans';font-weight:600;font-size:16px;padding:15px 40px;border-radius:100px;min-width:280px;text-align:center;transition:all .3s;}
+.cta-banner .right .btn-o:hover{border-color:#fff;background:rgba(255,255,255,0.1);}
+.cta-banner .micro{font-family:'DM Sans';font-weight:300;font-size:12px;color:rgba(255,255,255,0.55);text-align:center;width:100%;max-width:280px;}
+@media(max-width:900px){.cta-banner{grid-template-columns:1fr;} .cta-banner .right{align-items:stretch;}}
+
+/* ============ CONTACT ============ */
+.contact{background:#030308;padding:130px 6%;position:relative;overflow:hidden;}
+.contact .head{text-align:center;margin-bottom:70px;}
+.contact .section-sub{margin-left:auto;margin-right:auto;}
+.contact .row{display:grid;grid-template-columns:40% 60%;gap:60px;}
+.contact-info{position:relative;}
+.contact-info .wm{position:absolute;left:-30px;bottom:-30px;font-family:'Playfair Display';font-weight:900;font-size:200px;color:rgba(255,255,255,0.015);pointer-events:none;line-height:1;}
+.contact-item{display:grid;grid-template-columns:60px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid rgba(255,255,255,0.06);align-items:center;position:relative;z-index:2;}
+.contact-item .ic{width:48px;height:48px;border-radius:10px;background:rgba(200,16,46,0.10);border:1px solid rgba(200,16,46,0.20);display:flex;align-items:center;justify-content:center;font-size:22px;}
+.contact-item .lbl{font-family:'DM Sans';font-weight:600;font-size:11px;color:var(--white-35);text-transform:uppercase;letter-spacing:.15em;margin-bottom:4px;}
+.contact-item .val{font-family:'DM Sans';font-weight:400;font-size:15px;color:#fff;line-height:1.7;}
+
+.contact-form{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);backdrop-filter:blur(20px) saturate(180%);-webkit-backdrop-filter:blur(20px) saturate(180%);box-shadow:0 0 0 1px rgba(255,255,255,0.04),0 24px 64px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.06);border-radius:24px;padding:48px 44px;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+.field{position:relative;margin-bottom:28px;}
+.field input,.field select,.field textarea{width:100%;background:rgba(255,255,255,0.04);border:none;border-bottom:1px solid rgba(255,255,255,0.12);border-radius:0;padding:18px 0 12px;color:#fff;font-family:'DM Sans';font-weight:400;font-size:15px;outline:none;transition:border-color .3s,box-shadow .3s;}
+.field textarea{resize:vertical;min-height:100px;}
+.field select{appearance:none;cursor:none;}
+.field label{position:absolute;left:0;top:50%;transform:translateY(-50%);font-family:'DM Sans';font-weight:400;font-size:15px;color:var(--white-45);transition:all .3s ease;pointer-events:none;}
+.field.textarea label{top:24px;transform:none;}
+.field input:focus,.field select:focus,.field textarea:focus{border-bottom-color:var(--red);box-shadow:0 2px 0 var(--red);}
+.field.filled label,.field input:focus~label,.field select:focus~label,.field textarea:focus~label{top:-2px;font-size:11px;color:var(--white-70);letter-spacing:.08em;text-transform:uppercase;transform:none;}
+.field.textarea.filled label,.field textarea:focus~label{top:-2px;}
+.field select option{background:#0A0A12;color:#fff;}
+.submit-btn{width:100%;height:58px;border-radius:100px;background:var(--red);color:#fff;font-family:'DM Sans';font-weight:700;font-size:17px;position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s;margin-top:8px;}
+.submit-btn::before{content:'';position:absolute;inset:0;background:#fff;transform:scaleX(0);transform-origin:right;transition:transform .5s cubic-bezier(.7,0,.2,1);z-index:0;}
+.submit-btn span{position:relative;z-index:1;transition:color .4s;}
+.submit-btn:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(200,16,46,.4);}
+.submit-btn:hover::before{transform:scaleX(1);transform-origin:left;}
+.submit-btn:hover span{color:var(--red);}
+.submit-btn.loading{width:58px;margin:0 auto;display:block;}
+.submit-btn.loading span{display:none;}
+.submit-btn.loading::after{content:'';position:absolute;top:50%;left:50%;width:24px;height:24px;margin:-12px 0 0 -12px;border:2px solid rgba(255,255,255,0.3);border-top-color:#fff;border-radius:50%;animation:spin .9s linear infinite;}
+@keyframes spin{to{transform:rotate(360deg)}}
+.submit-btn.success{background:#1f8c4a;width:100%;}
+.submit-btn.success span{display:inline;}
+@media(max-width:900px){.contact .row{grid-template-columns:1fr;} .form-row{grid-template-columns:1fr;}}
+
+/* ============ FOOTER ============ */
+footer{background:#020205;border-top:1px solid rgba(255,255,255,0.05);padding:80px 6% 40px;position:relative;overflow:hidden;}
+footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);text-align:center;font-family:'Playfair Display';font-weight:900;font-size:clamp(80px,15vw,180px);color:rgba(255,255,255,0.013);letter-spacing:.2em;pointer-events:none;white-space:nowrap;}
+.footer-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1.2fr;gap:50px;position:relative;z-index:2;}
+.footer-grid h6{font-family:'DM Sans';font-weight:700;font-size:13px;color:#fff;text-transform:uppercase;letter-spacing:.15em;margin-bottom:22px;}
+.footer-grid a,.footer-grid p{position:relative;display:inline-block;font-family:'DM Sans';font-weight:300;font-size:14px;color:var(--white-35);margin-bottom:10px;transition:color .3s;}
+.footer-grid a::after{content:'';position:absolute;left:0;bottom:-2px;width:100%;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left;transition:transform .3s;}
+.footer-grid a:hover{color:#fff;}
+.footer-grid a:hover::after{transform:scaleX(1);}
+.footer-col-brand p{font-family:'DM Sans';font-weight:300;font-size:14px;color:var(--white-35);max-width:290px;line-height:1.7;margin:18px 0;}
+.footer-col-brand .nav-brand{margin-bottom:0;}
+.socials{display:flex;gap:10px;margin-top:18px;}
+.socials a{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,0.10);display:inline-flex;align-items:center;justify-content:center;font-family:'DM Sans';font-weight:700;font-size:11px;color:var(--white-70);transition:all .3s;margin:0;}
+.socials a::after{display:none;}
+.socials a:hover{background:var(--red);border-color:var(--red);color:#fff;}
+.footer-bottom{margin-top:60px;border-top:1px solid rgba(255,255,255,0.05);padding-top:28px;display:flex;justify-content:space-between;font-family:'DM Sans';font-weight:300;font-size:12px;color:var(--white-25);position:relative;z-index:2;flex-wrap:wrap;gap:12px;}
+@media(max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;gap:32px;}}
+@media(max-width:600px){.footer-grid{grid-template-columns:1fr;}}
+
+/* ============ WHATSAPP ============ */
+.wa-btn{position:fixed;bottom:32px;right:32px;width:60px;height:60px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;z-index:500;font-size:26px;box-shadow:0 10px 30px rgba(37,211,102,0.35);transition:transform .3s,box-shadow .3s;}
+.wa-btn::before,.wa-btn::after{content:'';position:absolute;inset:0;border:2px solid #25D366;border-radius:50%;}
+.wa-btn::before{animation:pulse-ring 2.4s infinite;}
+.wa-btn::after{animation:pulse-ring 2.4s .8s infinite;}
+@keyframes pulse-ring{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.7);opacity:0}}
+.wa-btn:hover{transform:scale(1.12);box-shadow:0 15px 50px rgba(37,211,102,0.55);}
+.wa-tooltip{position:absolute;right:calc(100% + 14px);top:50%;transform:translateY(-50%) translateX(10px);background:rgba(0,0,0,0.85);padding:8px 16px;border-radius:8px;font-family:'DM Sans';font-weight:500;font-size:13px;color:#fff;white-space:nowrap;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;}
+.wa-btn:hover .wa-tooltip{opacity:1;transform:translateY(-50%) translateX(0);}
+
+.dark-section{position:relative;}
+.dark-section.has-noise::before{content:'';position:absolute;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:1;opacity:.4;}
+
+.container-rel{position:relative;z-index:2;}
+
+/* ============ FLAG BADGE (CSS, no emoji dependency) ============ */
+.flag-badge{position:relative;display:inline-flex;align-items:center;justify-content:center;font-family:'DM Sans';font-weight:800;letter-spacing:.08em;color:#fff;border-radius:14px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.35),inset 0 0 0 1px rgba(255,255,255,.12);}
+.flag-badge::before{content:'';position:absolute;inset:0;z-index:0;}
+.flag-badge::after{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,0) 45%,rgba(0,0,0,.25));z-index:1;}
+.flag-badge>span{position:relative;z-index:2;text-shadow:0 1px 2px rgba(0,0,0,.45);}
+.flag-badge.sm{width:54px;height:54px;font-size:15px;border-radius:12px;}
+.flag-badge.md{width:68px;height:68px;font-size:18px;}
+.flag-badge.lg{width:82px;height:82px;font-size:22px;border-radius:18px;}
+.fb-ng::before{background:linear-gradient(90deg,#008753 0 33%,#fff 33% 67%,#008753 67% 100%);}
+.fb-gb::before{background:#012169;}
+.fb-gb::after{background:
+  linear-gradient(90deg,transparent 42%,#fff 42% 58%,transparent 58%),
+  linear-gradient(0deg,transparent 42%,#fff 42% 58%,transparent 58%),
+  linear-gradient(90deg,transparent 46%,#C8102E 46% 54%,transparent 54%),
+  linear-gradient(0deg,transparent 46%,#C8102E 46% 54%,transparent 54%),
+  linear-gradient(135deg,rgba(255,255,255,.18),rgba(255,255,255,0) 45%,rgba(0,0,0,.25));}
+.fb-us::before{background:repeating-linear-gradient(180deg,#B22234 0 12.5%,#fff 12.5% 25%);}
+.fb-us>span{background:#3C3B6E;padding:6px 10px;border-radius:8px;}
+.fb-ca::before{background:linear-gradient(90deg,#D52B1E 0 25%,#fff 25% 75%,#D52B1E 75% 100%);}
+.fb-fr::before{background:linear-gradient(90deg,#0055A4 0 33%,#fff 33% 67%,#EF4135 67% 100%);}
+.fb-es::before{background:linear-gradient(180deg,#AA151B 0 25%,#F1BF00 25% 75%,#AA151B 75% 100%);}
+.fb-cn::before{background:#DE2910;}
+.fb-cn>span{color:#FFDE00;}
+.fb-ru::before{background:linear-gradient(180deg,#fff 0 33%,#0039A6 33% 67%,#D52B1E 67% 100%);}
+.fb-de::before{background:linear-gradient(180deg,#000 0 33%,#DD0000 33% 67%,#FFCE00 67% 100%);}
+.fb-it::before{background:linear-gradient(90deg,#008C45 0 33%,#fff 33% 67%,#CD212A 67% 100%);}
+.fb-ng>span,.fb-fr>span,.fb-ca>span,.fb-it>span{background:rgba(0,0,0,.55);padding:5px 9px;border-radius:8px;}
+.fb-es>span,.fb-ru>span,.fb-de>span,.fb-gb>span{background:rgba(0,0,0,.55);padding:5px 9px;border-radius:8px;}
+
+/* ============ MOBILE POLISH (≤640px) ============ */
+@media(max-width:640px){
+  nav.navbar{height:64px;padding:0 5%;}
+  .rc-badge{width:34px;height:34px;font-size:14px;}
+  .nav-brand-name{font-size:13px;}
+  #mobile-menu a{font-size:28px;}
+  .hero{padding:110px 5% 70px;min-height:auto;}
+  .hero-eyebrow{font-size:10px;padding:6px 12px;margin-bottom:20px;}
+  .hero-content h1{font-size:38px;}
+  .hero-content h1 .global{font-size:42px;}
+  .hero-sub{font-size:15px;line-height:1.7;margin:22px 0 28px;}
+  .hero-ctas{gap:10px;margin-bottom:36px;}
+  .btn-primary,.btn-ghost{padding:14px 26px;font-size:14px;width:100%;text-align:center;}
+  .hero-stats{gap:14px 22px;}
+  .hero-stat{padding-right:18px;}
+  .hero-stat .num{font-size:26px;}
+  .hero-stat .lbl{font-size:10px;}
+  .scroll-indicator{display:none;}
+  .marquee-row span{font-size:13px;padding:0 14px;gap:14px;}
+  section.destinations,section.services,section.languages-section,section.process-section,section.exams,section.why,section.testimonials,section.contact{padding:80px 5%;}
+  .section-h2{font-size:32px;}
+  .section-sub{font-size:15px;margin-top:18px;}
+  .services .head{margin-bottom:36px;gap:24px;}
+  .destinations .head,.languages-section .head,.exams .head,.why .head,.process-section .head{margin-bottom:36px;}
+  .dest-grid{gap:14px;}
+  .dest-card{min-height:240px;border-radius:14px;}
+  .dest-card .inner{padding:24px;}
+  .dest-card.usa h3{font-size:38px;}
+  .dest-card.uk h3,.dest-card.ca h3{font-size:30px;}
+  .card-container{height:200px;}
+  .card-front{padding:22px 18px;}
+  .card-front h4{font-size:16px;}
+  .lang-wrapper{height:auto;}
+  .lang-track{display:grid !important;grid-template-columns:1fr 1fr;gap:12px;padding:0;height:auto;transform:none !important;}
+  .lang-card{flex:none;width:100%;height:auto;min-height:170px;padding:22px 14px;gap:10px;border-radius:12px;}
+  .lang-card h4{font-size:17px;}
+  .lang-card .mode{font-size:10px;padding:4px 9px;}
+  .process-grid{gap:24px;}
+  .process-step{padding:20px 18px !important;}
+  .exam-card{padding:24px 20px;min-height:auto;}
+  .exam-card .badge{font-size:18px;padding:6px 12px;}
+  .why .row{gap:40px;}
+  .why-item{grid-template-columns:38px 1fr;gap:14px;padding:18px 0;}
+  .why-item .check{width:28px;height:28px;font-size:12px;}
+  .metric-panel{padding:32px 24px;border-radius:18px;}
+  .metric-row .num{font-size:42px;}
+  .testimonials .head{margin-bottom:36px;}
+  .t-card{padding:28px 22px;border-radius:16px;}
+  .t-card .quote{font-size:15px;line-height:1.7;margin-bottom:20px;}
+  .t-card .qm{font-size:60px;margin:18px 0 -10px;}
+  .carousel-nav button{width:42px;height:42px;}
+  .cta-banner{padding:70px 5%;gap:32px;}
+  .cta-banner .right .btn-w,.cta-banner .right .btn-o{min-width:0;width:100%;padding:15px 24px;font-size:15px;}
+  .contact .head{margin-bottom:42px;}
+  .contact-form{padding:32px 22px;border-radius:18px;}
+  .field{margin-bottom:22px;}
+  .submit-btn{height:54px;font-size:15px;}
+  footer{padding:60px 5% 32px;}
+  .footer-grid{gap:32px;}
+  .footer-bottom{flex-direction:column;align-items:flex-start;gap:8px;font-size:11px;}
+  .wa-btn{bottom:20px;right:20px;width:52px;height:52px;font-size:22px;}
+  .wa-tooltip{display:none;}
+}
+@media(max-width:380px){
+  .hero-content h1{font-size:34px;}
+  .hero-content h1 .global{font-size:38px;}
+  .section-h2{font-size:28px;}
+  .lang-track{grid-template-columns:1fr !important;}
+}
+</style>
+</head>
+<body>
+
+<!-- CURSOR -->
+<div id="cursor-ring"></div>
+<div id="cursor-dot"></div>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div id="preloader-line"></div>
+  <div id="preloader-rc">RC</div>
+  <div id="preloader-name">READING CULTURE LIMITED</div>
+  <div id="preloader-bar"></div>
+</div>
+
+<!-- THREE.JS CANVAS -->
+<canvas id="three-canvas"></canvas>
+
+<!-- NAV -->
+<nav class="navbar">
+  <a href="#hero" class="nav-brand">
+    <div class="rc-badge">RC</div>
+    <div class="nav-brand-name">Reading Culture Limited</div>
+  </a>
+  <div class="nav-links">
+    <a href="#destinations" class="nav-link" data-spy="destinations">Destinations</a>
+    <a href="#services" class="nav-link" data-spy="services">Services</a>
+    <a href="#languages" class="nav-link" data-spy="languages">Languages</a>
+    <a href="#exams" class="nav-link" data-spy="exams">Exams</a>
+    <a href="#contact" class="nav-link" data-spy="contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta magnetic">Free Counselling</a>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div id="mobile-menu">
+  <a href="#destinations">Destinations</a>
+  <a href="#services">Services</a>
+  <a href="#languages">Languages</a>
+  <a href="#exams">Exams</a>
+  <a href="#contact">Contact</a>
+  <div class="contact-mini">
+    +234 802 328 1323<br>readingcultureltd@gmail.com<br>Victoria Island, Lagos
+  </div>
+</div>
+
+<!-- HERO -->
+<section class="hero noise" id="hero">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">🎓 Nigeria's #1 Study Abroad Consultancy</div>
+    <h1>
+      <span class="line-wrap"><span class="hero-word">Your</span> <span class="hero-word">Gateway</span> <span class="hero-word">to</span> <span class="hero-word">a</span></span>
+      <span class="global">Global Future.</span>
+    </h1>
+    <p class="hero-sub">We connect ambitious Nigerian students to world-class universities in the USA, UK &amp; Canada — with scholarship support, visa guidance, and complete end-to-end care from first call to landing.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary hero-cta magnetic"><span>Begin Your Journey →</span></a>
+      <a href="#services" class="btn-ghost hero-cta">Explore Services</a>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat"><div class="num"><span data-counter="500" data-suffix="+">0</span><span class="suf">+</span></div><div class="lbl">Students Placed</div></div>
+      <div class="hero-stat"><div class="num"><span data-counter="100" data-suffix="%">0</span><span class="suf">%</span></div><div class="lbl">UK Success Rate</div></div>
+      <div class="hero-stat"><div class="num"><span data-counter="10" data-suffix="+">0</span><span class="suf">+</span></div><div class="lbl">Languages</div></div>
+      <div class="hero-stat"><div class="num"><span data-counter="15" data-suffix="+">0</span><span class="suf">+</span></div><div class="lbl">Years</div></div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="dest-float dest-1 tilt-card">
+      <div class="flag-row"><div class="flag">🇺🇸</div><div class="dot"></div></div>
+      <h3>United States</h3>
+      <div class="tag">Ivy League & Top Universities</div>
+      <div class="pills"><span>F-1 Visa</span><span>SAT Ready</span><span>Scholarships</span></div>
+      <a href="#contact" class="micro">Apply Now →</a>
+    </div>
+    <div class="dest-float dest-2 tilt-card">
+      <div class="flag-row"><div class="flag">🇬🇧</div><div class="dot"></div></div>
+      <h3>United Kingdom</h3>
+      <div class="tag">100% Visa Success Rate</div>
+      <div class="pills"><span>Russell Group</span><span>A-Levels</span><span>Scholarships</span></div>
+      <a href="#contact" class="micro">Apply Now →</a>
+    </div>
+    <div class="dest-float dest-3 tilt-card">
+      <div class="flag-row"><div class="flag">🇨🇦</div><div class="dot"></div></div>
+      <h3>Canada</h3>
+      <div class="tag">PR-Friendly Pathways</div>
+      <div class="pills"><span>SDS Visa</span><span>Co-op</span><span>PR Track</span></div>
+      <a href="#contact" class="micro">Apply Now →</a>
+    </div>
+  </div>
+
+  <div class="scroll-indicator">
+    <div class="line"></div>
+    <span>SCROLL</span>
+    <div class="arrow">↓</div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee">
+  <div class="marquee-row mq-1">
+    <span>Building a Global Future</span><span>USA · UK · Canada</span><span>500+ Students Placed</span><span>100% UK Visa Success</span><span>Scholarship Support</span><span>Free Counselling</span>
+    <span>Building a Global Future</span><span>USA · UK · Canada</span><span>500+ Students Placed</span><span>100% UK Visa Success</span><span>Scholarship Support</span><span>Free Counselling</span>
+  </div>
+  <div class="marquee-row mq-2">
+    <span>IGCSE · SAT · JAMB · WAEC</span><span>10+ Languages</span><span>Chess Tutoring</span><span>Career Development</span><span>Victoria Island, Lagos</span><span>Since 2010</span>
+    <span>IGCSE · SAT · JAMB · WAEC</span><span>10+ Languages</span><span>Chess Tutoring</span><span>Career Development</span><span>Victoria Island, Lagos</span><span>Since 2010</span>
+  </div>
+</div>
+
+<!-- DESTINATIONS -->
+<section class="destinations dark-section has-noise" id="destinations">
+  <div class="container-rel">
+    <div class="head reveal">
+      <div class="section-tag">Where Will You Study?</div>
+      <h2 class="section-h2"><span class="line-wrap"><span>Three Nations.</span></span><span class="line-wrap"><span class="accent">Three Futures.</span></span></h2>
+      <p class="section-sub">From the Ivy League to Russell Group to Canada's research powerhouses — choose the destination that fits your ambition. We handle every detail.</p>
+    </div>
+    <div class="dest-grid">
+      <div class="dest-card usa tilt-card">
+        <div class="bg-icon">🗽</div>
+        <div class="inner">
+          <div class="flag"><span class="flag-badge md fb-us"><span>US</span></span></div>
+          <h3>USA</h3>
+          <div class="tag">Innovation, opportunity, and the world's top-ranked universities</div>
+          <div class="pills"><span>Ivy League</span><span>F-1 Visa</span><span>OPT Pathway</span></div>
+          <a href="#contact" class="cta">Apply Now →</a>
+        </div>
+      </div>
+      <div class="dest-card uk tilt-card">
+        <div class="bg-icon">🎓</div>
+        <div class="inner">
+          <div class="flag"><span class="flag-badge md fb-gb"><span>UK</span></span></div>
+          <h3>UK</h3>
+          <div class="tag">100% visa success — Oxbridge & Russell Group</div>
+          <div class="pills"><span>3-Year Degrees</span><span>PSW Visa</span></div>
+          <a href="#contact" class="cta">Apply Now →</a>
+        </div>
+      </div>
+      <div class="dest-card ca tilt-card">
+        <div class="bg-icon">🍁</div>
+        <div class="inner">
+          <div class="flag"><span class="flag-badge md fb-ca"><span>CA</span></span></div>
+          <h3>Canada</h3>
+          <div class="tag">PR-friendly with affordable world-class education</div>
+          <div class="pills"><span>SDS Visa</span><span>Co-op Programs</span></div>
+          <a href="#contact" class="cta">Apply Now →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="head reveal">
+    <div>
+      <div class="section-tag">What We Do</div>
+      <h2 class="section-h2 dark"><span class="line-wrap"><span>Complete Academic</span></span><span class="line-wrap"><span class="accent">&amp; Career Services.</span></span></h2>
+    </div>
+    <div class="right">
+      <p>Every service designed to unlock your potential — from tutoring and translation to full study-abroad logistics. One trusted partner. Eight powerful programs.</p>
+      <a href="#contact" class="view-all">View All Services →</a>
+    </div>
+  </div>
+  <div class="svc-grid">
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">🌍</div><div class="num">01</div><h4>International Study Advisory</h4><p>Complete end-to-end study abroad consultation tailored to you.</p></div>
+      <div class="card-back"><div class="ico">🌍</div><h4>Study Advisory</h4><p>End-to-end guidance across USA, UK & Canada.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">🎓</div><div class="num">02</div><h4>Overseas School Admission</h4><p>University applications across three premium destinations.</p></div>
+      <div class="card-back"><div class="ico">🎓</div><h4>Admissions</h4><p>Applications, essays, interviews — handled by experts.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">🎯</div><div class="num">03</div><h4>Consulting &amp; Coaching</h4><p>Strategic guidance tailored to your academic goals.</p></div>
+      <div class="card-back"><div class="ico">🎯</div><h4>Coaching</h4><p>Personal strategy sessions with seasoned advisors.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">📚</div><div class="num">04</div><h4>Academic Tutoring</h4><p>Expert tutors for all subjects, online and onsite.</p></div>
+      <div class="card-back"><div class="ico">📚</div><h4>Tutoring</h4><p>Subject-matter experts for every level and exam.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">♟️</div><div class="num">05</div><h4>Chess Game Tutoring</h4><p>Online and onsite chess coaching for all skill levels.</p></div>
+      <div class="card-back"><div class="ico">♟️</div><h4>Chess</h4><p>From opening theory to tournament strategy.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">🗣️</div><div class="num">06</div><h4>Language &amp; Translation</h4><p>10+ languages taught by certified, native tutors.</p></div>
+      <div class="card-back"><div class="ico">🗣️</div><h4>Languages</h4><p>Yoruba to Mandarin — speak fluently, fast.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">📖</div><div class="num">07</div><h4>Business &amp; Academic Books</h4><p>Curated reading for academic and career excellence.</p></div>
+      <div class="card-back"><div class="ico">📖</div><h4>Books</h4><p>Hand-picked titles for serious learners.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+    <div class="card-container"><div class="card-inner">
+      <div class="card-front"><div class="icon-circle">🚀</div><div class="num">08</div><h4>Training &amp; Career Development</h4><p>Skills training that gives you a competitive edge.</p></div>
+      <div class="card-back"><div class="ico">🚀</div><h4>Career</h4><p>From CV to career roadmap and beyond.</p><a href="#contact">Contact Us →</a></div>
+    </div></div>
+  </div>
+</section>
+
+<!-- LANGUAGES -->
+<section class="languages-section dark-section has-noise" id="languages">
+  <div class="container-rel">
+    <div class="head reveal">
+      <div>
+        <div class="section-tag">Speak the World</div>
+        <h2 class="section-h2"><span class="line-wrap"><span>Ten Languages.</span></span><span class="line-wrap"><span class="accent">One Voice.</span></span></h2>
+      </div>
+      <p class="section-sub">Certified tutors. Online and onsite. From your mother tongue to Mandarin — fluency is a skill we teach with rigor and joy.</p>
+    </div>
+    <div class="lang-wrapper">
+      <div class="lang-track" id="lang-track">
+        <div class="lang-card"><span class="flag-badge lg fb-ng"><span>NG</span></span><h4>Yoruba</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-ng"><span>NG</span></span><h4>Igbo</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-ng"><span>NG</span></span><h4>Hausa</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-gb"><span>UK</span></span><h4>English</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-fr"><span>FR</span></span><h4>French</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-es"><span>ES</span></span><h4>Spanish</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-cn"><span>CN</span></span><h4>Chinese</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-ru"><span>RU</span></span><h4>Russian</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-de"><span>DE</span></span><h4>German</h4><div class="mode">Online &amp; Offline</div></div>
+        <div class="lang-card"><span class="flag-badge lg fb-it"><span>IT</span></span><h4>Italian</h4><div class="mode">Online &amp; Offline</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-section dark-section has-noise">
+  <div class="container-rel">
+    <div class="head reveal" style="text-align:center;">
+      <div class="section-tag">How It Works</div>
+      <h2 class="section-h2"><span class="line-wrap"><span>Your Journey in</span></span><span class="line-wrap"><span class="accent">4 Simple Steps.</span></span></h2>
+      <p class="section-sub">From first call to landing in your new home — we walk every mile with you.</p>
+    </div>
+    <div class="process-wrap">
+      <div class="process-line"><div class="process-line-fill"></div></div>
+      <div class="process-grid">
+        <div class="process-step" data-step="0"><div class="node"></div><div class="step-num">01</div><h4>Free Counselling</h4><p>Book a session. We assess your profile, goals, and ideal university matches.</p></div>
+        <div class="process-step" data-step="1"><div class="node"></div><div class="step-num">02</div><h4>Application &amp; Admission</h4><p>We craft compelling applications and submit to your shortlisted universities.</p></div>
+        <div class="process-step" data-step="2"><div class="node"></div><div class="step-num">03</div><h4>Visa &amp; Logistics</h4><p>Full support — visa documents, ticket booking, accommodation arranged.</p></div>
+        <div class="process-step" data-step="3"><div class="node"></div><div class="step-num">04</div><h4>Arrive &amp; Thrive</h4><p>Land with confidence. Ongoing support even after you reach your new home.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXAMS -->
+<section class="exams dark-section has-noise" id="exams">
+  <div class="container-rel">
+    <div class="head reveal">
+      <div class="section-tag">Exam Preparation 2026</div>
+      <h2 class="section-h2"><span class="line-wrap"><span>Get Ahead.</span></span><span class="line-wrap"><span class="accent">Stay Ahead.</span></span></h2>
+      <p class="section-sub">Expert coaching for every major exam — designed by tutors who have placed hundreds of students into top-tier institutions.</p>
+    </div>
+    <div class="exam-grid">
+      <div class="exam-card w"><div class="badge">IGCSE</div><h4>Cambridge / Edexcel</h4><p>A* grade preparation with intensive subject mastery and exam technique.</p><div class="arrow">→</div><div class="watermark">IGCSE</div></div>
+      <div class="exam-card r"><div class="badge">SAT</div><h4>US College Admission</h4><p>Score optimization for Math, Reading & Writing — proven results.</p><div class="arrow">→</div><div class="watermark">SAT</div></div>
+      <div class="exam-card w"><div class="badge">UTME</div><h4>JAMB Coaching</h4><p>Intensive mock exams with detailed analytics and weak-area drills.</p><div class="arrow">→</div><div class="watermark">UTME</div></div>
+      <div class="exam-card r"><div class="badge">WAEC</div><h4>NECO / SSCE</h4><p>Core subject tutoring with practice papers and structured revision.</p><div class="arrow">→</div><div class="watermark">WAEC</div></div>
+      <div class="exam-card w"><div class="badge">CP</div><h4>Cambridge Checkpoint</h4><p>Primary and secondary checkpoint coaching for international curricula.</p><div class="arrow">→</div><div class="watermark">CP</div></div>
+      <div class="exam-card r"><div class="badge">UK</div><h4>A-Levels &amp; UK Programme</h4><p>Full A-Level and UK curriculum support across every major subject.</p><div class="arrow">→</div><div class="watermark">UK</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY -->
+<section class="why dark-section has-noise">
+  <div class="container-rel">
+    <div class="row">
+      <div class="reveal">
+        <div class="section-tag">Why Reading Culture</div>
+        <h2 class="section-h2"><span class="line-wrap"><span>Trusted by</span></span><span class="line-wrap"><span class="accent">500+ Students</span></span><span class="line-wrap"><span>Across Africa.</span></span></h2>
+        <p class="section-sub">Fifteen years. Three continents. One mission — open doors that change lives. Our students aren't statistics; they're scientists, lawyers, engineers, and leaders shaping tomorrow.</p>
+        <div class="why-list">
+          <div class="why-item"><div class="check">✓</div><div><h5>100% Professional Guidance Throughout</h5><p>Certified advisors with deep expertise in US, UK, and Canadian university admissions.</p></div></div>
+          <div class="why-item"><div class="check">✓</div><div><h5>Free Initial Counselling Session</h5><p>No-obligation consultation. Explore all your options before committing to anything.</p></div></div>
+          <div class="why-item"><div class="check">✓</div><div><h5>Scholarship &amp; Financial Aid Support</h5><p>We identify and help you apply for scholarships that reduce your study costs.</p></div></div>
+          <div class="why-item"><div class="check">✓</div><div><h5>Complete Visa &amp; Logistics Arrangement</h5><p>From visa documents to flights and accommodation — we manage every detail.</p></div></div>
+        </div>
+      </div>
+      <div class="metric-panel reveal">
+        <div class="metric-row"><div class="num"><span data-counter="500">0</span><span class="suf">+</span></div><div class="lbl">Students placed in international universities</div><div class="underline"></div></div>
+        <div class="metric-row"><div class="num"><span data-counter="100">0</span><span class="suf">%</span></div><div class="lbl">UK visa and admission success rate</div><div class="underline"></div></div>
+        <div class="metric-row"><div class="num"><span data-counter="10">0</span><span class="suf">+</span></div><div class="lbl">Languages taught by certified tutors</div><div class="underline"></div></div>
+        <div class="metric-row"><div class="num"><span data-counter="15">0</span><span class="suf">+</span></div><div class="lbl">Years of trusted educational excellence</div><div class="underline"></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+  <div class="head reveal">
+    <div class="section-tag" style="color:var(--red);">Real Stories</div>
+    <h2 class="section-h2 dark"><span class="line-wrap"><span>Students Who Made It</span></span><span class="line-wrap"><span class="accent">Happen.</span></span></h2>
+  </div>
+  <div class="carousel">
+    <div class="carousel-window">
+      <div class="carousel-track" id="carousel-track">
+        <div class="t-card tilt-card">
+          <div class="top"><div class="stars">★★★★★</div><div class="flag-pill">🇬🇧 Manchester, UK</div></div>
+          <span class="qm">"</span>
+          <p class="quote">Reading Culture made every step easy. From choosing the right university to getting my visa approved, they were there every single step. I'm living my dream in Manchester.</p>
+          <div class="who"><div class="avatar">AO</div><div><h6>Adaeze O.</h6><span>University of Manchester · UK</span></div></div>
+        </div>
+        <div class="t-card tilt-card">
+          <div class="top"><div class="stars">★★★★★</div><div class="flag-pill">🇨🇦 Toronto, Canada</div></div>
+          <span class="qm">"</span>
+          <p class="quote">One free counselling session and I had a complete roadmap. They found me a scholarship I never knew existed. Now I'm studying Computer Science in Toronto — fully funded.</p>
+          <div class="who"><div class="avatar">KA</div><div><h6>Kolade A.</h6><span>University of Toronto · Canada</span></div></div>
+        </div>
+        <div class="t-card tilt-card">
+          <div class="top"><div class="stars">★★★★★</div><div class="flag-pill">🇳🇬 Lagos, Parent</div></div>
+          <span class="qm">"</span>
+          <p class="quote">My son scored 8 A*s in IGCSE after their tutoring program. Their chess coaching made him school champion too. This organisation is genuinely exceptional at what they do.</p>
+          <div class="who"><div class="avatar">FN</div><div><h6>Mrs. Fatima N.</h6><span>Parent · Lagos, Nigeria</span></div></div>
+        </div>
+        <div class="t-card tilt-card">
+          <div class="top"><div class="stars">★★★★★</div><div class="flag-pill">🇺🇸 Boston, USA</div></div>
+          <span class="qm">"</span>
+          <p class="quote">From SAT prep to dorm move-in, they handled it all. I got into Boston University with a scholarship I never thought possible. Forever grateful for their dedication.</p>
+          <div class="who"><div class="avatar">CE</div><div><h6>Chuka E.</h6><span>Boston University · USA</span></div></div>
+        </div>
+      </div>
+    </div>
+    <div class="carousel-nav">
+      <button id="car-prev" aria-label="Previous">←</button>
+      <div class="carousel-dots" id="car-dots"></div>
+      <button id="car-next" aria-label="Next">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-banner">
+  <div class="blob-w b1"></div>
+  <div class="blob-w b2"></div>
+  <div class="left">
+    <div class="overline">Applications Open — 2026 Intake</div>
+    <h2>Ready to Build Your<br><span class="it">Global Future?</span></h2>
+    <p class="sub">Book a free session today. No commitment. No cost. Just a clear roadmap to your dream university — from our expert team.</p>
+  </div>
+  <div class="right">
+    <a href="#contact" class="btn-w magnetic">Book Free Counselling</a>
+    <a href="tel:+2348023281323" class="btn-o">Call +234 802 328 1323</a>
+    <div class="micro">🔒 Free. Confidential. No spam ever.</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact dark-section has-noise" id="contact">
+  <div class="container-rel">
+    <div class="head reveal" style="text-align:center;">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-h2"><span class="line-wrap"><span>Start Your Journey</span></span><span class="line-wrap"><span class="accent">Today.</span></span></h2>
+      <p class="section-sub">A 20-minute conversation can change the next 20 years of your life. Let's start one.</p>
+    </div>
+    <div class="row">
+      <div class="contact-info">
+        <div class="wm">RC</div>
+        <div class="contact-item"><div class="ic">📞</div><div><div class="lbl">Call Us</div><div class="val">+234 802 328 1323<br>+234 812 841 7498<br>+234 706 260 9147<br>+234 806 556 3157</div></div></div>
+        <div class="contact-item"><div class="ic">✉️</div><div><div class="lbl">Email</div><div class="val">readingcultureltd@gmail.com</div></div></div>
+        <div class="contact-item"><div class="ic">📍</div><div><div class="lbl">Office</div><div class="val">5 Oniru Estate, Victoria Island, Lagos, Nigeria</div></div></div>
+        <div class="contact-item"><div class="ic">🕐</div><div><div class="lbl">Hours</div><div class="val">Mon–Fri 9am–6pm · Sat 10am–3pm</div></div></div>
+      </div>
+      <form class="contact-form" id="contact-form" onsubmit="return false;">
+        <div class="form-row">
+          <div class="field"><input type="text" id="fn" autocomplete="given-name"><label for="fn">First Name</label></div>
+          <div class="field"><input type="text" id="ln" autocomplete="family-name"><label for="ln">Last Name</label></div>
+        </div>
+        <div class="field"><input type="email" id="em" autocomplete="email"><label for="em">Email Address</label></div>
+        <div class="field"><input type="tel" id="ph" autocomplete="tel"><label for="ph">Phone Number</label></div>
+        <div class="field filled"><select id="svc">
+          <option value="">Choose a service…</option>
+          <option>International Study Advisory</option>
+          <option>Overseas School Admission</option>
+          <option>Consulting &amp; Coaching</option>
+          <option>Academic Tutoring</option>
+          <option>Chess Game Tutoring</option>
+          <option>Language Tutoring &amp; Translation</option>
+          <option>Exam Preparation</option>
+          <option>Free Counselling</option>
+        </select><label for="svc">I'm Interested In…</label></div>
+        <div class="field textarea"><textarea id="msg" rows="4"></textarea><label for="msg">Tell us about your goals</label></div>
+        <button class="submit-btn" id="submit-btn" type="button"><span>Send Message →</span></button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wm">READING CULTURE</div>
+  <div class="footer-grid">
+    <div class="footer-col-brand">
+      <a href="#hero" class="nav-brand"><div class="rc-badge">RC</div><div class="nav-brand-name">Reading Culture Limited</div></a>
+      <p>For all your academic and career development needs. Building a global future, one student at a time.</p>
+      <div class="socials"><a href="#" aria-label="Facebook">f</a><a href="#" aria-label="LinkedIn">in</a><a href="#" aria-label="Instagram">ig</a><a href="#" aria-label="Twitter">tw</a></div>
+    </div>
+    <div>
+      <h6>Study Abroad</h6>
+      <a href="#destinations">USA</a><br><a href="#destinations">United Kingdom</a><br><a href="#destinations">Canada</a><br><a href="#contact">Free Counselling</a><br><a href="#contact">Scholarships</a>
+    </div>
+    <div>
+      <h6>Services</h6>
+      <a href="#services">Academic Tutoring</a><br><a href="#languages">Language Training</a><br><a href="#exams">Exam Prep</a><br><a href="#services">Chess Tutoring</a><br><a href="#services">Coaching &amp; Training</a>
+    </div>
+    <div>
+      <h6>Contact</h6>
+      <a href="tel:+2348023281323">+234 802 328 1323</a><br><a href="tel:+2348128417498">+234 812 841 7498</a><br><a href="mailto:readingcultureltd@gmail.com">readingcultureltd@gmail.com</a><br><p>Victoria Island, Lagos</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <div>© 2026 Reading Culture Limited. All rights reserved.</div>
+    <div>CAC Registered · Victoria Island, Lagos · Nigeria</div>
+  </div>
+</footer>
+
+<!-- WHATSAPP -->
+<a href="https://wa.me/2348023281323" target="_blank" rel="noopener" class="wa-btn magnetic" aria-label="Chat on WhatsApp">
+  <span style="position:relative;z-index:2;">💬</span>
+  <div class="wa-tooltip">Chat on WhatsApp →</div>
+</a>
+
+<!-- LIBRARIES -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<script>
+/* ============== THREE.JS SCENE ============== */
+let scene, camera, renderer, globeGroup, globe, wireGlobe, particlesW, particlesR, ring1, ring2, ring3, markers=[], cubes=[];
+let targetRotY=0, currentRotY=0, scrollProg=0, targetScroll=0;
+
+function latLonToVec3(lat, lon, r){
+  const phi=(90-lat)*Math.PI/180, theta=(lon+180)*Math.PI/180;
+  return new THREE.Vector3(-r*Math.sin(phi)*Math.cos(theta), r*Math.cos(phi), r*Math.sin(phi)*Math.sin(theta));
+}
+
+function initThreeJS(){
+  const canvas=document.getElementById('three-canvas');
+  scene=new THREE.Scene();
+  camera=new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+  camera.position.z=5;
+  renderer=new THREE.WebGLRenderer({canvas, antialias:true, alpha:true});
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio,2));
+  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setClearColor(0x000000,0);
+
+  globeGroup=new THREE.Group();
+  globeGroup.position.set(2.5,0,0);
+  scene.add(globeGroup);
+
+  const sphereGeo=new THREE.SphereGeometry(2.2,64,64);
+  const sphereMat=new THREE.MeshPhongMaterial({color:0x0a0a1a, emissive:0xC8102E, emissiveIntensity:0.08, transparent:true, opacity:0.9});
+  globe=new THREE.Mesh(sphereGeo, sphereMat);
+  globeGroup.add(globe);
+
+  const wireMat=new THREE.MeshBasicMaterial({color:0xC8102E, wireframe:true, transparent:true, opacity:0.12});
+  wireGlobe=new THREE.Mesh(sphereGeo, wireMat);
+  globeGroup.add(wireGlobe);
+
+  // particles
+  function buildParticles(count, color){
+    const positions=new Float32Array(count*3);
+    for(let i=0;i<count;i++){
+      const r=2.4+Math.random()*1.6;
+      const phi=Math.acos(2*Math.random()-1);
+      const theta=Math.random()*Math.PI*2;
+      positions[i*3]=r*Math.sin(phi)*Math.cos(theta);
+      positions[i*3+1]=r*Math.cos(phi);
+      positions[i*3+2]=r*Math.sin(phi)*Math.sin(theta);
+    }
+    const g=new THREE.BufferGeometry();
+    g.setAttribute('position', new THREE.BufferAttribute(positions,3));
+    return new THREE.Points(g, new THREE.PointsMaterial({color, size:0.02, transparent:true, opacity:0.65, sizeAttenuation:true}));
+  }
+  particlesW=buildParticles(560, 0xffffff);
+  particlesR=buildParticles(240, 0xC8102E);
+  globeGroup.add(particlesW); globeGroup.add(particlesR);
+
+  // rings
+  function buildRing(inner, outer, tilt){
+    const g=new THREE.RingGeometry(inner, outer, 128);
+    const m=new THREE.MeshBasicMaterial({color:0xC8102E, transparent:true, opacity:0.25, side:THREE.DoubleSide});
+    const r=new THREE.Mesh(g,m);
+    r.rotation.x=tilt;
+    return r;
+  }
+  ring1=buildRing(2.6,2.62, Math.PI/2);
+  ring2=buildRing(3.0,3.02, 70*Math.PI/180);
+  ring3=buildRing(3.4,3.42, 110*Math.PI/180);
+  globeGroup.add(ring1); globeGroup.add(ring2); globeGroup.add(ring3);
+
+  // markers
+  const markerData=[
+    {lat:38, lon:-97, color:0xFF4444, phase:0},
+    {lat:54, lon:-2,  color:0x4488FF, phase:1.5},
+    {lat:56, lon:-106,color:0xFF8844, phase:3.0}
+  ];
+  markerData.forEach(d=>{
+    const pos=latLonToVec3(d.lat,d.lon,2.25);
+    const m=new THREE.Mesh(new THREE.SphereGeometry(0.06,16,16), new THREE.MeshBasicMaterial({color:d.color}));
+    m.position.copy(pos);
+    globe.add(m);
+    const halo=new THREE.Mesh(new THREE.SphereGeometry(0.15,16,16), new THREE.MeshBasicMaterial({color:d.color, transparent:true, opacity:0.15}));
+    halo.position.copy(pos);
+    globe.add(halo);
+    markers.push({mesh:m, halo, phase:d.phase});
+  });
+
+  // floating cubes
+  for(let i=0;i<200;i++){
+    const c=new THREE.Mesh(new THREE.BoxGeometry(0.015,0.015,0.015), new THREE.MeshBasicMaterial({color: i%2?0xC8102E:0xffffff}));
+    c.position.set((Math.random()-0.5)*10,(Math.random()-0.5)*10,(Math.random()-0.5)*6);
+    c.userData={vx:(Math.random()-0.5)*0.005, vy:(Math.random()-0.5)*0.005, vz:(Math.random()-0.5)*0.003, rx:Math.random()*0.02, ry:Math.random()*0.02};
+    scene.add(c); cubes.push(c);
+  }
+
+  // lighting
+  scene.add(new THREE.AmbientLight(0xffffff,0.3));
+  const dl=new THREE.DirectionalLight(0xffffff,0.8); dl.position.set(5,3,5); scene.add(dl);
+  const pl1=new THREE.PointLight(0xC8102E,1.5,10); pl1.position.set(-3,2,2); scene.add(pl1);
+  const pl2=new THREE.PointLight(0x4444ff,0.5,8); pl2.position.set(3,-2,-2); scene.add(pl2);
+
+  window.addEventListener('resize',()=>{
+    camera.aspect=window.innerWidth/window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  });
+
+  window.addEventListener('mousemove',(e)=>{
+    const dx=(e.clientX/window.innerWidth)-0.5;
+    const dy=(e.clientY/window.innerHeight)-0.5;
+    targetRotY += dx*0.0008;
+    globeGroup.rotation.x = dy*0.3;
+  });
+
+  window.addEventListener('scroll',()=>{
+    targetScroll = window.scrollY/(document.body.scrollHeight-window.innerHeight);
+  },{passive:true});
+
+  animateThree();
+}
+
+function animateThree(){
+  requestAnimationFrame(animateThree);
+  const t=performance.now()*0.001;
+
+  globe.rotation.y += 0.0015;
+  globe.rotation.x += 0.0003;
+  wireGlobe.rotation.y = globe.rotation.y;
+  wireGlobe.rotation.x = globe.rotation.x;
+
+  currentRotY += (targetRotY-currentRotY)*0.05;
+  globeGroup.rotation.y = currentRotY;
+
+  particlesW.rotation.y -= 0.0008;
+  particlesR.rotation.y += 0.0012;
+
+  ring1.rotation.z += 0.003;
+  ring2.rotation.z -= 0.002;
+  ring3.rotation.z += 0.0015;
+
+  markers.forEach(m=>{
+    const s=1+0.4*Math.sin(t*2+m.phase);
+    m.mesh.scale.setScalar(s);
+    m.halo.scale.setScalar(1+0.3*Math.sin(t*2+m.phase+0.5));
+  });
+
+  cubes.forEach(c=>{
+    c.position.x+=c.userData.vx;c.position.y+=c.userData.vy;c.position.z+=c.userData.vz;
+    if(Math.abs(c.position.x)>8)c.userData.vx*=-1;
+    if(Math.abs(c.position.y)>8)c.userData.vy*=-1;
+    if(Math.abs(c.position.z)>3)c.userData.vz*=-1;
+    c.rotation.x+=c.userData.rx;c.rotation.y+=c.userData.ry;
+  });
+
+  scrollProg += (targetScroll-scrollProg)*0.06;
+  globeGroup.position.y = -scrollProg*8;
+  camera.position.z = 5+scrollProg*3;
+
+  renderer.render(scene,camera);
+}
+
+/* ============== CUSTOM CURSOR ============== */
+function initCustomCursor(){
+  if(matchMedia('(pointer:coarse)').matches) return;
+  const dot=document.getElementById('cursor-dot');
+  const ring=document.getElementById('cursor-ring');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{
+    mx=e.clientX; my=e.clientY;
+    dot.style.left=mx+'px'; dot.style.top=my+'px';
+  });
+  (function loop(){
+    rx+=(mx-rx)*0.10; ry+=(my-ry)*0.10;
+    ring.style.left=rx+'px'; ring.style.top=ry+'px';
+    requestAnimationFrame(loop);
+  })();
+  const hoverSel='a,button,input,select,textarea,.tilt-card,.lang-card,.card-container,.exam-card,.dest-card';
+  document.querySelectorAll(hoverSel).forEach(el=>{
+    el.addEventListener('mouseenter',()=>document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave',()=>document.body.classList.remove('cursor-hover'));
+  });
+  document.addEventListener('mousedown',()=>document.body.classList.add('cursor-down'));
+  document.addEventListener('mouseup',()=>document.body.classList.remove('cursor-down'));
+}
+
+/* ============== PRELOADER ============== */
+function initPreloader(){
+  const tl=gsap.timeline();
+  tl.to('#preloader-line',{scaleX:1,duration:0.6,ease:'power2.out'})
+    .to('#preloader-rc',{opacity:1,y:0,duration:0.5,ease:'back.out(1.7)'})
+    .to('#preloader-name',{opacity:1,letterSpacing:'0.4em',duration:0.6})
+    .to('#preloader-bar',{scaleX:1,duration:0.7,ease:'power1.inOut'},'-=0.3')
+    .to('#preloader',{opacity:0,y:-30,duration:0.6,delay:0.2,onComplete:()=>{
+      document.getElementById('preloader').style.display='none';
+      initSite();
+    }});
+}
+
+/* ============== SITE INIT ============== */
+function initSite(){
+  gsap.registerPlugin(ScrollTrigger);
+
+  // hero entrance
+  gsap.from('.hero-eyebrow',{opacity:0,y:30,duration:0.7,delay:0.1});
+  gsap.from('.hero-word',{opacity:0,y:80,rotationX:45,duration:0.8,stagger:0.1,ease:'back.out(1.4)',transformPerspective:800,delay:0.2});
+  gsap.from('.global',{opacity:0,y:60,duration:0.9,delay:0.7,ease:'power3.out'});
+  gsap.from('.hero-sub',{opacity:0,y:40,duration:0.8,delay:0.9});
+  gsap.from('.hero-ctas > *',{opacity:0,y:30,duration:0.6,stagger:0.12,delay:1.1});
+  gsap.from('.hero-stat',{opacity:0,y:20,duration:0.5,stagger:0.1,delay:1.3});
+  gsap.from('.dest-float',{opacity:0,y:60,scale:0.9,duration:0.9,stagger:0.18,delay:0.6,ease:'power3.out'});
+
+  initScrollReveal();
+  initCounters();
+  initCardTilt();
+  initMagnetic();
+  initCarousel();
+  initScrollSpy();
+  initNavScroll();
+  initFormHandler();
+  initMobileMenu();
+  initProcessLine();
+}
+
+/* ============== SCROLL REVEALS ============== */
+function initScrollReveal(){
+  document.querySelectorAll('.reveal').forEach(el=>{
+    const lines=el.querySelectorAll('.section-h2 .line-wrap > span');
+    if(lines.length){
+      gsap.from(lines,{scrollTrigger:{trigger:el,start:'top 80%'},opacity:0,y:60,rotationX:30,stagger:0.13,duration:0.9,ease:'power3.out',transformPerspective:600});
+    }
+    gsap.from(el.querySelectorAll('.section-tag, .section-sub, .view-all, .why-list, .right p'),{scrollTrigger:{trigger:el,start:'top 80%'},opacity:0,y:30,duration:0.7,stagger:0.08,delay:0.2});
+  });
+
+  gsap.from('.dest-card',{scrollTrigger:{trigger:'.dest-grid',start:'top 80%'},opacity:0,y:60,scale:0.94,stagger:0.12,duration:0.8,ease:'power2.out'});
+  gsap.from('.card-container',{scrollTrigger:{trigger:'.svc-grid',start:'top 80%'},opacity:0,y:60,scale:0.92,stagger:0.06,duration:0.7,ease:'power2.out'});
+  gsap.from('.exam-card',{scrollTrigger:{trigger:'.exam-grid',start:'top 80%'},opacity:0,y:50,scale:0.94,stagger:0.08,duration:0.7,ease:'power2.out'});
+  gsap.from('.why-item',{scrollTrigger:{trigger:'.why-list',start:'top 80%'},opacity:0,x:-40,stagger:0.12,duration:0.7,ease:'power2.out'});
+  gsap.from('.lang-card',{scrollTrigger:{trigger:'.lang-track',start:'top 80%'},opacity:0,scale:0.5,stagger:0.06,duration:0.7,ease:'back.out(1.6)'});
+
+  // blob parallax
+  gsap.to('.blob-1',{scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true},y:-100});
+  gsap.to('.blob-2',{scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true},y:120});
+}
+
+/* ============== COUNTERS ============== */
+function initCounters(){
+  document.querySelectorAll('[data-counter]').forEach(el=>{
+    const end=parseInt(el.getAttribute('data-counter'));
+    const obj={n:0};
+    gsap.to(obj,{n:end,duration:2.2,ease:'power1.out',scrollTrigger:{trigger:el,start:'top 85%'},onUpdate:()=>{el.textContent=Math.ceil(obj.n);}});
+  });
+  // metric underlines
+  document.querySelectorAll('.metric-row').forEach(row=>{
+    ScrollTrigger.create({trigger:row,start:'top 85%',onEnter:()=>row.classList.add('shown')});
+  });
+}
+
+/* ============== TILT ============== */
+function initCardTilt(){
+  document.querySelectorAll('.tilt-card').forEach(card=>{
+    card.addEventListener('mousemove',e=>{
+      const r=card.getBoundingClientRect();
+      const x=(e.clientX-r.left)/r.width-0.5;
+      const y=(e.clientY-r.top)/r.height-0.5;
+      gsap.to(card,{rotationX:-y*12,rotationY:x*18,duration:0.5,ease:'power2.out',transformPerspective:1200});
+    });
+    card.addEventListener('mouseleave',()=>{
+      gsap.to(card,{rotationX:0,rotationY:0,duration:0.7,ease:'power3.out'});
+    });
+  });
+}
+
+/* ============== MAGNETIC ============== */
+function initMagnetic(){
+  document.querySelectorAll('.magnetic').forEach(el=>{
+    el.addEventListener('mousemove',e=>{
+      const r=el.getBoundingClientRect();
+      const x=e.clientX-r.left-r.width/2;
+      const y=e.clientY-r.top-r.height/2;
+      gsap.to(el,{x:x*0.25,y:y*0.35,duration:0.4,ease:'power2.out'});
+    });
+    el.addEventListener('mouseleave',()=>gsap.to(el,{x:0,y:0,duration:0.6,ease:'elastic.out(1,0.4)'}));
+  });
+}
+
+/* ============== CAROUSEL ============== */
+function initCarousel(){
+  const track=document.getElementById('carousel-track');
+  if(!track) return;
+  const cards=track.children;
+  const dotsWrap=document.getElementById('car-dots');
+  let idx=0, autoTimer;
+  const total=cards.length;
+  for(let i=0;i<total;i++){
+    const d=document.createElement('div');d.className='dot';if(i===0)d.classList.add('active');
+    d.addEventListener('click',()=>{idx=i;update();});
+    dotsWrap.appendChild(d);
+  }
+  function visibleCount(){return window.innerWidth<600?1:window.innerWidth<900?2:3;}
+  function update(){
+    const vc=visibleCount();
+    const max=Math.max(0,total-vc);
+    if(idx>max)idx=0; if(idx<0)idx=max;
+    const card=cards[0];
+    const cw=card.getBoundingClientRect().width+24;
+    gsap.to(track,{x:-idx*cw,duration:0.7,ease:'power2.inOut'});
+    [...dotsWrap.children].forEach((d,i)=>d.classList.toggle('active',i===idx));
+  }
+  document.getElementById('car-prev').addEventListener('click',()=>{idx--;update();reset();});
+  document.getElementById('car-next').addEventListener('click',()=>{idx++;update();reset();});
+  function auto(){autoTimer=setInterval(()=>{idx++;update();},4500);}
+  function reset(){clearInterval(autoTimer);auto();}
+  auto();
+  track.parentElement.addEventListener('mouseenter',()=>clearInterval(autoTimer));
+  track.parentElement.addEventListener('mouseleave',auto);
+  // drag
+  let dragX=0, startX=0, dragging=false;
+  track.addEventListener('mousedown',e=>{dragging=true;startX=e.clientX;dragX=0;});
+  window.addEventListener('mousemove',e=>{if(!dragging)return;dragX=e.clientX-startX;});
+  window.addEventListener('mouseup',()=>{if(!dragging)return;dragging=false;if(Math.abs(dragX)>60){dragX<0?idx++:idx--;update();reset();}});
+  track.addEventListener('touchstart',e=>{startX=e.touches[0].clientX;dragX=0;});
+  track.addEventListener('touchmove',e=>{dragX=e.touches[0].clientX-startX;});
+  track.addEventListener('touchend',()=>{if(Math.abs(dragX)>40){dragX<0?idx++:idx--;update();reset();}});
+  window.addEventListener('resize',update);
+  update();
+}
+
+/* ============== SCROLL SPY ============== */
+function initScrollSpy(){
+  const links=document.querySelectorAll('[data-spy]');
+  const map={};
+  links.forEach(l=>{const id=l.getAttribute('data-spy'); const sec=document.getElementById(id); if(sec) map[id]=l;});
+  const io=new IntersectionObserver(entries=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){
+        links.forEach(l=>l.classList.remove('active'));
+        const l=map[en.target.id]; if(l)l.classList.add('active');
+      }
+    });
+  },{threshold:0.4});
+  Object.keys(map).forEach(id=>{const s=document.getElementById(id); if(s) io.observe(s);});
+}
+
+/* ============== NAV SCROLL ============== */
+function initNavScroll(){
+  const nav=document.querySelector('.navbar');
+  window.addEventListener('scroll',()=>{
+    if(window.scrollY>60) nav.classList.add('scrolled'); else nav.classList.remove('scrolled');
+  },{passive:true});
+}
+
+/* ============== FORM ============== */
+function initFormHandler(){
+  document.querySelectorAll('.field input, .field select, .field textarea').forEach(inp=>{
+    const wrap=inp.closest('.field');
+    inp.addEventListener('input',()=>wrap.classList.toggle('filled',!!inp.value));
+    inp.addEventListener('blur',()=>wrap.classList.toggle('filled',!!inp.value));
+  });
+  const btn=document.getElementById('submit-btn');
+  btn.addEventListener('click',()=>{
+    btn.classList.add('loading');
+    setTimeout(()=>{
+      btn.classList.remove('loading');
+      btn.classList.add('success');
+      btn.innerHTML='<span>✓ Message Sent! We\'ll contact you soon.</span>';
+      setTimeout(()=>{
+        btn.classList.remove('success');
+        btn.innerHTML='<span>Send Message →</span>';
+        document.getElementById('contact-form').querySelectorAll('input,select,textarea').forEach(i=>{i.value='';i.closest('.field').classList.remove('filled');});
+        document.querySelector('.field select').closest('.field').classList.add('filled');
+      },3500);
+    },1500);
+  });
+}
+
+/* ============== MOBILE MENU ============== */
+function initMobileMenu(){
+  const hb=document.getElementById('hamburger');
+  const mm=document.getElementById('mobile-menu');
+  hb.addEventListener('click',()=>{
+    hb.classList.toggle('open');
+    mm.classList.toggle('open');
+    document.body.style.overflow=mm.classList.contains('open')?'hidden':'';
+    if(mm.classList.contains('open')){
+      gsap.from(mm.querySelectorAll('a'),{opacity:0,x:40,stagger:0.08,duration:0.5,ease:'power2.out'});
+    }
+  });
+  mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{hb.classList.remove('open');mm.classList.remove('open');document.body.style.overflow='';}));
+}
+
+/* ============== PROCESS LINE ============== */
+function initProcessLine(){
+  const fill=document.querySelector('.process-line-fill');
+  const steps=document.querySelectorAll('.process-step');
+  if(!fill) return;
+  ScrollTrigger.create({
+    trigger:'.process-section',
+    start:'top 60%', end:'bottom 50%',
+    scrub:1,
+    onUpdate:(self)=>{
+      gsap.set(fill,{scaleX:self.progress});
+      const activeIdx=Math.floor(self.progress*steps.length);
+      steps.forEach((s,i)=>s.classList.toggle('active', i<=activeIdx));
+    }
+  });
+}
+
+/* ============== BOOT ============== */
+initThreeJS();
+document.addEventListener('DOMContentLoaded',()=>{
+  initCustomCursor();
+  initPreloader();
+});
+</script>
+</body>
+</html>
