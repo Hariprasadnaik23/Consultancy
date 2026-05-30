@@ -47,9 +47,10 @@ img{max-width:100%;display:block;}
 
 /* ============ PRELOADER ============ */
 #preloader{position:fixed;inset:0;background:#030308;z-index:99999;display:flex;align-items:center;justify-content:center;flex-direction:column;}
-#preloader-line{width:80px;height:1px;background:var(--red);transform:scaleX(0);transform-origin:left center;margin-bottom:24px;}
-#preloader-rc{font-family:'Playfair Display';font-weight:900;font-size:88px;color:#fff;letter-spacing:-4px;opacity:0;transform:translateY(30px);line-height:1;}
-#preloader-name{font-family:'DM Sans';font-weight:200;font-size:11px;color:rgba(255,255,255,0.4);letter-spacing:0;opacity:0;margin-top:18px;text-transform:uppercase;}
+#preloader-logo{height:100px;width:auto;object-fit:contain;opacity:0;transform:scale(0.8);margin-bottom:32px;}
+#preloader-line{width:80px;height:1px;background:var(--red);transform:scaleX(0);transform-origin:center;margin-bottom:32px;}
+#preloader-rc{font-family:'Playfair Display';font-weight:900;font-size:64px;color:#fff;letter-spacing:-2px;opacity:0;transform:translateY(30px);line-height:1;margin-bottom:12px;}
+#preloader-welcome{font-family:'DM Sans';font-weight:300;font-size:14px;color:rgba(255,255,255,0.6);letter-spacing:0.08em;opacity:0;transform:translateY(30px);text-transform:capitalize;text-align:center;max-width:300px;}
 #preloader-bar{position:absolute;bottom:0;left:0;width:100%;height:2px;background:var(--red);transform:scaleX(0);transform-origin:left center;}
 
 /* ============ THREE CANVAS ============ */
@@ -228,8 +229,8 @@ section{position:relative;}
 /* ============ LANGUAGES (horizontal scroll) ============ */
 .languages-section{background:#030308;padding:130px 0;overflow:hidden;position:relative;}
 .languages-section .head{padding:0 6%;margin-bottom:60px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:end;}
-.lang-wrapper{height:380px;position:relative;}
-.lang-track{display:flex;gap:20px;padding:0 6%;height:100%;align-items:center;}
+.lang-wrapper{height:auto;position:relative;}
+.lang-track{display:grid;grid-template-columns:repeat(5,1fr);gap:20px;padding:0 6%;height:auto;align-items:center;}
 .lang-card{flex:0 0 260px;height:300px;background:var(--black-card);border:1px solid rgba(255,255,255,0.07);border-radius:14px;padding:36px 28px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;transition:transform .4s,background .4s,box-shadow .4s;}
 .lang-card .flag{font-size:48px;transition:transform .4s;}
 .lang-card h4{font-family:'Playfair Display';font-weight:700;font-size:22px;color:#fff;}
@@ -237,7 +238,7 @@ section{position:relative;}
 .lang-card:hover{background:var(--red);transform:translateY(-6px);box-shadow:0 0 10px rgba(200,16,46,.5),0 0 30px rgba(200,16,46,.3),0 0 60px rgba(200,16,46,.15);}
 .lang-card:hover .flag{transform:scale(1.35);}
 .lang-card:hover .mode{background:rgba(255,255,255,0.2);color:#fff;}
-@media(max-width:900px){.languages-section .head{grid-template-columns:1fr;}}
+@media(max-width:900px){.languages-section .head{grid-template-columns:1fr;} .lang-track{grid-template-columns:repeat(3,1fr);}}
 
 /* ============ PROCESS ============ */
 .process-section{background:var(--black-2);padding:130px 6%;}
@@ -515,9 +516,10 @@ footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);t
 
 <!-- PRELOADER -->
 <div id="preloader">
+  <img src="logo.png" alt="Reading Culture Limited" id="preloader-logo">
   <div id="preloader-line"></div>
   <div id="preloader-rc">RC</div>
-  <div id="preloader-name">READING CULTURE LIMITED</div>
+  <div id="preloader-welcome">welcome to Reading Culture Limited</div>
   <div id="preloader-bar"></div>
 </div>
 
@@ -1124,11 +1126,12 @@ function initCustomCursor(){
 /* ============== PRELOADER ============== */
 function initPreloader(){
   const tl=gsap.timeline();
-  tl.to('#preloader-line',{scaleX:1,duration:0.6,ease:'power2.out'})
-    .to('#preloader-rc',{opacity:1,y:0,duration:0.5,ease:'back.out(1.7)'})
-    .to('#preloader-name',{opacity:1,letterSpacing:'0.4em',duration:0.6})
-    .to('#preloader-bar',{scaleX:1,duration:0.7,ease:'power1.inOut'},'-=0.3')
-    .to('#preloader',{opacity:0,y:-30,duration:0.6,delay:0.2,onComplete:()=>{
+  tl.to('#preloader-logo',{opacity:1,scale:1,duration:0.5,ease:'back.out(1.7)'})
+    .to('#preloader-line',{scaleX:1,duration:0.6,ease:'power2.out'},0.2)
+    .to('#preloader-rc',{opacity:1,y:0,duration:0.5,ease:'back.out(1.7)'},0.4)
+    .to('#preloader-welcome',{opacity:1,y:0,duration:0.5,ease:'back.out(1.7)'},0.5)
+    .to('#preloader-bar',{scaleX:1,duration:0.7,ease:'power1.inOut'},'-=0.2')
+    .to('#preloader',{opacity:0,y:-30,duration:0.6,delay:0.3,onComplete:()=>{
       document.getElementById('preloader').style.display='none';
       initSite();
     }});
