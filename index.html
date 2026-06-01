@@ -456,8 +456,11 @@ footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);t
   .nav-brand-name{font-size:13px;}
   #mobile-menu a{font-size:28px;}
   .hero{padding:110px 5% 70px;min-height:auto;}
-  .hero-eyebrow{font-size:10px;padding:6px 12px;margin-bottom:20px;}
-  .hero-content h1{font-size:38px;}
+
+  /* Normalize flag / badge sizing on small screens to avoid visual inconsistency */
+    .flag-badge{width:64px;height:64px;font-size:16px;border-radius:12px;}
+    .flag-badge>span{padding:0 6px;}
+    .lang-card .flag{font-size:36px;}
   .hero-content h1 .global{font-size:42px;}
   .hero-sub{font-size:15px;line-height:1.7;margin:22px 0 28px;}
   .hero-ctas{gap:10px;margin-bottom:36px;}
@@ -555,13 +558,13 @@ footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);t
   <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
 
-<div id="mobile-menu">
-  <a href="#destinations">Destinations</a>
-  <a href="#services">Services</a>
-  <a href="#languages">Languages</a>
-  <a href="#gallery">Gallery</a>
-  <a href="#exams">Exams</a>
-  <a href="#contact">Contact</a>
+  <div id="mobile-menu">
+  <a href="#destinations" data-spy="destinations">Destinations</a>
+  <a href="#services" data-spy="services">Services</a>
+  <a href="#languages" data-spy="languages">Languages</a>
+  <a href="#gallery" data-spy="gallery">Gallery</a>
+  <a href="#exams" data-spy="exams">Exams</a>
+  <a href="#contact" data-spy="contact">Contact</a>
   <div class="contact-mini">
     +234 802 328 1323<br>readingcultureltd@gmail.com<br>Victoria Island, Lagos
   </div>
@@ -870,7 +873,7 @@ footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);t
     </div>
     <div class="gallery-grid">
       <div class="video-card">
-        <video controls playsinline poster="video-poster1.jpg">
+        <video controls playsinline>
           <source src="Videos/Testimonial1.mp4" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
@@ -881,7 +884,7 @@ footer .wm{position:absolute;left:0;right:0;top:50%;transform:translateY(-50%);t
         </div>
       </div>
       <div class="video-card">
-        <video controls playsinline poster="video-poster2.jpg">
+        <video controls playsinline>
           <source src="Videos/Testmonial2.mp4" type="video/mp4">
           Your browser does not support HTML5 video.
         </video>
