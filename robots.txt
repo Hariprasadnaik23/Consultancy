@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://readingculturelimited.com/sitemap.xml
+
+# Production SEO note:
+# Submit this site to Google Search Console and Bing Webmaster for indexing and ranking signals.
